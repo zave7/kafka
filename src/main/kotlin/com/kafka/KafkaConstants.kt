@@ -22,4 +22,14 @@ object KafkaConstants {
             put(ProducerConfig.PARTITIONER_CLASS_CONFIG, clazz.java)
         }
     }
+    val CONFIGS_WITH_ADDED_OPTION = { options: List<Pair<String, Any>> ->
+        Properties().apply {
+            put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVERS)
+            put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer::class.java.name)
+            put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer::class.java.name)
+            options.forEach {
+                put(it.first, it.second)
+            }
+        }
+    }
 }
