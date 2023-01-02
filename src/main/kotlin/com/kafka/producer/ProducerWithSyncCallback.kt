@@ -1,6 +1,7 @@
 package com.kafka.producer
 
 import com.kafka.KafkaConstants
+import com.kafka.KafkaProducerConstants
 import mu.KotlinLogging
 import org.apache.kafka.clients.producer.KafkaProducer
 import org.apache.kafka.clients.producer.ProducerConfig
@@ -21,9 +22,9 @@ class ProducerWithSyncCallback {
 
     fun send() {
 
-        val producer = KafkaProducer<String, String>(KafkaConstants.DEFAULT_CONFIGS) // 기본 acks 값 : 1 (리더 파티션 저장 여부만 확인)
+        val producer = KafkaProducer<String, String>(KafkaProducerConstants.DEFAULT_CONFIGS) // 기본 acks 값 : 1 (리더 파티션 저장 여부만 확인)
         val producerAcks0 = KafkaProducer<String, String>( // 리더 파티션 저장 여부도 확인하지 않음
-            KafkaConstants.CONFIGS_WITH_ADDED_OPTION(
+            KafkaProducerConstants.CONFIGS_WITH_ADDED_OPTION(
                 listOf(ProducerConfig.ACKS_CONFIG to "0")
             )
         )

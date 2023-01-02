@@ -1,14 +1,14 @@
 package com.kafka.producer
 
 import com.kafka.KafkaConstants
-import mu.KotlinLogging
+import com.kafka.KafkaProducerConstants
 import org.apache.kafka.clients.producer.KafkaProducer
 import org.apache.kafka.clients.producer.ProducerRecord
 
 class ProducerWithKeyValue {
 
     fun send() {
-        val producer = KafkaProducer<String, String>(KafkaConstants.DEFAULT_CONFIGS)
+        val producer = KafkaProducer<String, String>(KafkaProducerConstants.DEFAULT_CONFIGS)
         val record1 = ProducerRecord(KafkaConstants.TOPIC_NAME, "Pangyo", "Pangyo")
         val record2 = ProducerRecord(KafkaConstants.TOPIC_NAME, "Busan", "Busan")
         producer.send(record1)
