@@ -15,13 +15,7 @@ class SimpleProducer {
     }
 
     fun send() {
-        val configs = Properties().apply {
-            put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KafkaConstants.BOOTSTRAP_SERVERS)
-            put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer::class.java.name)
-            put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer::class.java.name)
-        }
-
-        val producer = KafkaProducer<String, String>(configs) // 프로듀서 생성
+        val producer = KafkaProducer<String, String>(KafkaConstants.DEFAULT_CONFIGS) // 프로듀서 생성
         val messageValue = "testMessage"
         val record = ProducerRecord<String, String>(KafkaConstants.TOPIC_NAME, messageValue) // 레코드 생성
         producer.send(record) // send 호출 이후 partitioner 와 accumulator 의 프로세스를 거친 후에 전송된다
@@ -34,5 +28,10 @@ class SimpleProducer {
 }
 
 fun main() {
+    val consumerShell = """
+        bin/kafka-console-consumer.sh \
+        --bootstrap-server my-kafka:9092 \
+        --topic test
+    """
     SimpleProducer().send()
 }
