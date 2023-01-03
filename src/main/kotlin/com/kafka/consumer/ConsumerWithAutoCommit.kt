@@ -6,19 +6,19 @@ import java.time.Duration
 import mu.KotlinLogging
 import org.apache.kafka.clients.consumer.KafkaConsumer
 
-class SimpleConsumer {
+class ConsumerWithAutoCommit {
 
     companion object {
         private val logger = KotlinLogging.logger {}
     }
 
     fun consume() {
-        val consumer = KafkaConsumer<String, String>(KafkaConsumerConstants.MANUAL_COMMIT_CONFIGS)
+        val consumer = KafkaConsumer<String, String>(KafkaConsumerConstants.AUTO_COMMIT_CONFIGS)
         consumer.subscribe(listOf(KafkaConstants.TOPIC_NAME))
-        while(true) {
+        while (true) {
             val records = consumer.poll(Duration.ofSeconds(1))
-            records.forEach {
-                logger.info { "record: $it" }
+            for (record in records) {
+                logger.info("record:{}", record)
             }
         }
     }
@@ -26,10 +26,5 @@ class SimpleConsumer {
 }
 
 fun main() {
-    val produceShell = """
-        bin/kafka-console-producer.sh 
-        --bootstrap-server my-kafka:9092 \
-        --topic test
-    """
-    SimpleConsumer().consume()
+    ConsumerWithAutoCommit().consume()
 }

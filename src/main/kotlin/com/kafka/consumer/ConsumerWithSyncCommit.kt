@@ -6,7 +6,7 @@ import java.time.Duration
 import mu.KotlinLogging
 import org.apache.kafka.clients.consumer.KafkaConsumer
 
-class SimpleConsumer {
+class ConsumerWithSyncCommit {
 
     companion object {
         private val logger = KotlinLogging.logger {}
@@ -20,16 +20,12 @@ class SimpleConsumer {
             records.forEach {
                 logger.info { "record: $it" }
             }
+            consumer.commitSync() // 레코드에 대한 처리를 모두 끝낸 후 동기 커밋
         }
     }
 
 }
 
 fun main() {
-    val produceShell = """
-        bin/kafka-console-producer.sh 
-        --bootstrap-server my-kafka:9092 \
-        --topic test
-    """
-    SimpleConsumer().consume()
+    ConsumerWithSyncCommit().consume()
 }
