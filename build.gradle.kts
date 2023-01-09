@@ -17,6 +17,7 @@ dependencies {
     implementation(Libs.Logging.log4jSlf4j)
     implementation(Libs.Logging.logging)
     implementation(Libs.Kafka.client)
+    implementation(Libs.Kafka.streams)
 }
 
 tasks.test {

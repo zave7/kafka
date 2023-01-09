@@ -37,6 +37,7 @@ object Libs {
     object Kafka {
         private const val version = "2.5.0"
         const val client = "org.apache.kafka:kafka-clients:$version"
+        const val streams = "org.apache.kafka:kafka-streams:$version"
     }
 
 }
